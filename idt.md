@@ -59,3 +59,86 @@ The structure of the Interrupt Vector Table may vary depending on the computer a
 For example, in x86-based systems, the Interrupt Vector Table is often located at the beginning of memory (at address 0x0000:0000) and contains entries for various interrupts, including both hardware and software interrupts. Each entry in the table is typically 4 bytes and contains the 32-bit address of the ISR.
 
 In summary, the Interrupt Vector Table is a crucial component in managing interrupts in a computer system, providing a mapping between interrupt numbers and the corresponding interrupt service routines.
+
+##IDT VS IVT
+
+
+ the difference between the Interrupt Vector Table (IVT) and the Interrupt Descriptor Table (IDT). If that's not the case, please clarify, and I'll be happy to help.
+
+Assuming you meant IVT and IDT, here's the difference:
+
+1. **Interrupt Vector Table (IVT):**
+   - **Architecture:** The IVT is associated with x86 real mode, which is an older operating mode used during the boot process in early IBM PC-compatible systems.
+   - **Size:** The IVT is limited to 256 entries in real mode, corresponding to the 256 possible interrupt vectors in the x86 architecture.
+   - **Responsibility:** In real mode, the IVT contains addresses of the interrupt service routines (ISRs) for various interrupts, both hardware and software. The BIOS or the operating system sets up the IVT during system initialization.
+
+2. **Interrupt Descriptor Table (IDT):**
+   - **Architecture:** The IDT is associated with x86 protected mode, which is a more advanced operating mode used by modern operating systems.
+   - **Size:** The IDT can be larger and is not limited to 256 entries. It allows for more flexibility in handling interrupts in protected mode.
+   - **Responsibility:** The IDT serves a similar purpose to the IVT but is more versatile. It is used to map interrupt numbers to their corresponding interrupt service routines (ISRs) in protected mode. The IDT is set up by the operating system during system initialization.
+
+In summary, the IVT is specific to x86 real mode and has limitations in size, while the IDT is associated with x86 protected mode, providing a more flexible and extensible mechanism for handling interrupts in modern operating systems. The transition from real mode to protected mode typically involves setting up the IDT instead of the IVT.
+
+
+## Offset:
+The Interrupt Vector Offset refers to the starting point in memory where the Interrupt Vector Table (IVT) or Interrupt Descriptor Table (IDT) is located. The IVT or IDT is a data structure used in computer architectures, including x86, to manage and handle interrupts.
+
+In the x86 architecture, the Interrupt Vector Offset is often associated with the PIC (Programmable Interrupt Controller) configuration. When an interrupt occurs, the processor uses the interrupt number to index into the IVT or IDT to find the corresponding interrupt handler's address.
+
+Here are the key points related to the Interrupt Vector Offset:
+
+1. **IVT in x86 Architecture:**
+   - The Interrupt Vector Table (IVT) is an array of interrupt vectors in x86 systems. Each entry in the table corresponds to a specific interrupt or exception. The entry contains the memory address of the interrupt handler or service routine.
+
+2. **Interrupt Vector Offset:**
+   - The Interrupt Vector Offset is the base address or starting point of the IVT. It indicates where the IVT is located in memory. The interrupt number is added to this offset to calculate the memory address of the corresponding interrupt handler.
+
+3. **PIC Configuration:**
+   - In systems using a Programmable Interrupt Controller (PIC), the configuration of the PIC includes setting the Interrupt Vector Offset. This determines the memory location where the IVT starts.
+
+4. **Interrupt Vector Offset Register:**
+   - In the context of PICs, there may be a specific register or configuration option that allows you to set the Interrupt Vector Offset. For example, in the x86 architecture, the master PIC's control register at I/O port 0x21 is used to set the Interrupt Vector Offset.
+
+5. **Importance for Interrupt Handling:**
+   - Proper configuration of the Interrupt Vector Offset is crucial for correct interrupt handling. When an interrupt occurs, the processor uses the interrupt number and adds it to the Interrupt Vector Offset to find the address of the corresponding interrupt handler.
+
+6. **Example:**
+   - If the Interrupt Vector Offset is set to 0x20, and an interrupt with number 0 occurs, the processor would calculate the address as 0x20 + 0 = 0x20. It would then look up the address stored at this location in the IVT to find the interrupt handler.
+
+In summary, the Interrupt Vector Offset is a memory address that serves as the starting point for the Interrupt Vector Table or Interrupt Descriptor Table. It plays a crucial role in mapping interrupt numbers to their corresponding handlers during interrupt handling in computer systems.
+
+
+## isr:
+The provided assembly code appears to be part of an interrupt service routine (ISR) written for the x86 architecture. Specifically, it is intended to handle the software interrupt 0x21, which is often used for various DOS services in legacy systems. Let's break down the code:
+
+```assembly
+int21h:
+    cli          ; Disable interrupts
+    pushad       ; Push general-purpose registers onto the stack
+    call int21h_handler  ; Call the interrupt handler for int 0x21
+    popad        ; Pop the general-purpose registers from the stack
+    sti          ; Enable interrupts
+    iret         ; Return from interrupt
+```
+
+Explanation of each instruction:
+
+1. **`cli` (Disable Interrupts):**
+   - `cli` stands for "clear interrupt flag." It disables interrupts by clearing the interrupt flag (IF) in the flags register. This prevents the occurrence of additional interrupts during the execution of the ISR.
+
+2. **`pushad` (Push All Registers):**
+   - `pushad` is an instruction that pushes all the general-purpose registers (EAX, ECX, EDX, EBX, ESP, EBP, ESI, and EDI) onto the stack. This is done to save the register values before modifying them within the ISR.
+
+3. **`call int21h_handler` (Call Interrupt Handler):**
+   - This instruction calls the actual interrupt handler for int 0x21. The address of the handler is assumed to be defined in the `int21h_handler` label. The purpose of the ISR is to handle the specific functionality associated with software interrupt 0x21.
+
+4. **`popad` (Pop All Registers):**
+   - `popad` is the counterpart to `pushad` and restores the general-purpose registers to their original values by popping them from the stack.
+
+5. **`sti` (Enable Interrupts):**
+   - `sti` stands for "set interrupt flag." It enables interrupts by setting the interrupt flag (IF) in the flags register. This allows the processor to respond to interrupts again.
+
+6. **`iret` (Interrupt Return):**
+   - `iret` is used to return from the interrupt service routine. It pops values from the stack, including the flags, CS (Code Segment), and the EIP (Instruction Pointer), restoring the processor state to what it was before the interrupt occurred.
+
+The purpose of this code snippet is to provide a basic framework for handling the software interrupt 0x21. The actual functionality for handling the interrupt is expected to be implemented in the `int21h_handler` routine, which would follow this code in the program. The `cli` and `sti` instructions ensure that interrupts are disabled and then re-enabled during the execution of the ISR to avoid unwanted interruptions.

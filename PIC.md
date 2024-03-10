@@ -74,7 +74,7 @@ In summary, a PIC (Programmable Interrupt Controller) is a hardware component th
 
 ## IRQ definition
 
-Yes, that's correct. IRQ (Interrupt Request) is a mechanism used in computing for hardware devices to signal the CPU that they require attention or need to communicate with the system. IRQs are a way for hardware devices to interrupt the normal flow of the CPU and request immediate attention for specific actions.
+IRQ (Interrupt Request) is a mechanism used in computing for hardware devices to signal the CPU that they require attention or need to communicate with the system. IRQs are a way for hardware devices to interrupt the normal flow of the CPU and request immediate attention for specific actions.
 
 In the context of IRQs:
 
@@ -136,7 +136,7 @@ It's important to note that these standard IRQ assignments are specific to the t
 
 ## IRQ Line 
 
-Certainly! Let's use an analogy with a traditional office setting to help explain the concept of an IRQ (Interrupt Request) line.
+Let's use an analogy with a traditional office setting to help explain the concept of an IRQ (Interrupt Request) line.
 
 Imagine you are a manager in an office, and you have several employees working on different tasks. Each employee represents a different hardware device or peripheral in a computer system.
 

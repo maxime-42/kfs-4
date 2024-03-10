@@ -20,7 +20,7 @@ It's important to note that while the 8259 PIC was widely used in early IBM PC-c
 
 In summary, a PIC (Programmable Interrupt Controller) is a hardware component that plays a vital role in managing and prioritizing interrupt requests from various hardware devices, allowing for efficient handling of interrupts by the CPU.
 
-[] Analogie
+> Analogie
 Certainly! Let's use an analogy involving a receptionist in an office to explain the concept of a Programmable Interrupt Controller (PIC) in a computer system.
 
 Imagine you're in a large office building with many employees, and you're the manager (CPU) responsible for handling various requests and tasks. Each employee in the office represents a different hardware device or peripheral in the computer system.

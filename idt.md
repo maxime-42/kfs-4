@@ -1,4 +1,4 @@
-
+## Interrupt Descriptor Table (IDT) 
 The Interrupt Descriptor Table (IDT) is a data structure in the x86 architecture that holds information about various interrupt handlers. 
 The x86 architecture, commonly used in personal computers, uses the IDT to manage and respond to hardware and software interrupts.
 

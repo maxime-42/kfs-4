@@ -72,9 +72,23 @@ In summary, a PIC (Programmable Interrupt Controller) is a hardware component th
 > efficiently in the office (computer system).
 
 
+## IRQ definition
 
-## IRQ
+Yes, that's correct. IRQ (Interrupt Request) is a mechanism used in computing for hardware devices to signal the CPU that they require attention or need to communicate with the system. IRQs are a way for hardware devices to interrupt the normal flow of the CPU and request immediate attention for specific actions.
 
+In the context of IRQs:
+
+- **Hardware Interrupts:** IRQs are typically associated with hardware interrupts, where a hardware device such as a keyboard, mouse, network card, or disk controller signals the CPU to interrupt its current execution and handle the request from the device.
+
+- **Numbered Assignments:** Each hardware interrupt is assigned a unique number, which is the IRQ number. For example, IRQ 0 is often associated with the system timer, IRQ 1 with the keyboard, IRQ 14 with the primary ATA hard disk controller, and so on. These assignments help the system know which device is requesting attention.
+
+- **Interrupt Controller:** On many systems, an interrupt controller (such as the Programmable Interrupt Controller or PIC) manages and prioritizes these interrupt requests. The controller forwards the appropriate interrupt request to the CPU, allowing it to respond to the interrupt.
+
+- **Interrupt Service Routine (ISR):** When an interrupt occurs, the CPU stops its current task and executes a specific piece of code known as the Interrupt Service Routine (ISR) associated with the interrupt's IRQ number. The ISR handles the interrupt, communicates with the device, and performs any necessary actions.
+
+IRQs play a crucial role in allowing multiple hardware devices to share the CPU's attention without requiring constant polling. Instead of the CPU actively checking each device for updates, devices can generate interrupts when they need attention, allowing the CPU to respond efficiently to the most urgent tasks.
+
+<br>
 In computing, IRQ (Interrupt Request) is a mechanism used by hardware devices to get the attention of the CPU so that they can signal the need for processing or communicate with the system. Each hardware device typically has a specific IRQ line to send interrupt signals to the CPU.
 
 The concept of "standard IRQs" usually refers to a set of predefined interrupt request lines on the legacy IBM PC architecture. 
@@ -114,6 +128,10 @@ Here's a commonly used mapping of standard IRQs on IBM PC-compatible systems:
 16. **IRQ 15 - Secondary ATA Hard Disk Controller:**
 
 It's important to note that these standard IRQ assignments are specific to the traditional IBM PC architecture and are somewhat historical. In modern systems, especially those using the Advanced Programmable Interrupt Controller (APIC), the concept of standard IRQs has evolved, and devices are often assigned interrupt vectors dynamically. Nonetheless, the legacy IRQ numbering is still relevant in certain contexts, especially when dealing with legacy hardware or certain configurations.
+
+
+
+
 
 
 ## IRQ Line 

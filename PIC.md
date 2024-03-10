@@ -22,11 +22,8 @@ In summary, a PIC (Programmable Interrupt Controller) is a hardware component th
 
 > Analogie
 Certainly! Let's use an analogy involving a receptionist in an office to explain the concept of a Programmable Interrupt Controller (PIC) in a computer system.
-
 Imagine you're in a large office building with many employees, and you're the manager (CPU) responsible for handling various requests and tasks. Each employee in the office represents a different hardware device or peripheral in the computer system.
-
 Now, to manage the flow of requests and ensure that everything runs smoothly, you decide to appoint a receptionist (PIC) to handle incoming information and prioritize tasks.
-
 Here's how the analogy relates to a Programmable Interrupt Controller (PIC):
 
 1. **Manager (CPU):** You are the manager (CPU) overseeing the entire office (computer system) and handling various tasks.

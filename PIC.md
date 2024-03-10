@@ -73,6 +73,49 @@ In summary, a PIC (Programmable Interrupt Controller) is a hardware component th
 
 
 
+## IRQ
+
+In computing, IRQ (Interrupt Request) is a mechanism used by hardware devices to get the attention of the CPU so that they can signal the need for processing or communicate with the system. Each hardware device typically has a specific IRQ line to send interrupt signals to the CPU.
+
+The concept of "standard IRQs" usually refers to a set of predefined interrupt request lines on the legacy IBM PC architecture. 
+These standard IRQs are used for various devices like the keyboard, mouse, serial ports, parallel ports, and other peripherals. 
+Here's a commonly used mapping of standard IRQs on IBM PC-compatible systems:
+
+1. **IRQ 0 - System Timer:** Used for the system timer, which generates regular clock interrupts.
+  
+2. **IRQ 1 - Keyboard:** Used for the keyboard controller.
+
+3. **IRQ 2 - Cascade for IRQ 8-15:** This IRQ is used as a cascade for additional interrupt controllers, allowing more IRQs beyond the initial eight.
+
+4. **IRQ 3 - COM2 (Serial Port 2) / COM4:**
+  
+5. **IRQ 4 - COM1 (Serial Port 1) / COM3:**
+  
+6. **IRQ 5 - LPT2/ Sound Card:**
+  
+7. **IRQ 6 - Floppy Disk Controller:**
+  
+8. **IRQ 7 - LPT1 / Sound Card:**
+  
+9. **IRQ 8 - Real-Time Clock (RTC):** Used for the real-time clock.
+
+10. **IRQ 9 - Advanced Configuration and Power Interface (ACPI):** Used for system management interrupt (SMI) handling.
+
+11. **IRQ 10 - Open (some systems use this for a second network card):**
+  
+12. **IRQ 11 - Open (some systems use this for a network card):**
+  
+13. **IRQ 12 - PS/2 Mouse Port:**
+  
+14. **IRQ 13 - FPU / Coprocessor / Math Coprocessor:**
+  
+15. **IRQ 14 - Primary ATA Hard Disk Controller:**
+  
+16. **IRQ 15 - Secondary ATA Hard Disk Controller:**
+
+It's important to note that these standard IRQ assignments are specific to the traditional IBM PC architecture and are somewhat historical. In modern systems, especially those using the Advanced Programmable Interrupt Controller (APIC), the concept of standard IRQs has evolved, and devices are often assigned interrupt vectors dynamically. Nonetheless, the legacy IRQ numbering is still relevant in certain contexts, especially when dealing with legacy hardware or certain configurations.
+
+
 ## IRQ Line 
 
 Certainly! Let's use an analogy with a traditional office setting to help explain the concept of an IRQ (Interrupt Request) line.

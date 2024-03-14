@@ -60,7 +60,7 @@ For example, in x86-based systems, the Interrupt Vector Table is often located a
 
 In summary, the Interrupt Vector Table is a crucial component in managing interrupts in a computer system, providing a mapping between interrupt numbers and the corresponding interrupt service routines.
 
-##IDT VS IVT
+## IDT VS IVT
 
 
  the difference between the Interrupt Vector Table (IVT) and the Interrupt Descriptor Table (IDT). If that's not the case, please clarify, and I'll be happy to help.

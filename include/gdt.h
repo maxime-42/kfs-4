@@ -6,16 +6,19 @@
 /*   By: mkayumba <mkayumba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:48:02 by vvaucoul          #+#    #+#             */
-/*   Updated: 2024/04/08 13:19:37 by mkayumba         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:47:33 by mkayumba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GDT_H
 #define GDT_H
-
 #include "config.h"
 #define GDT_ADDRESS 0x00000800
 #define GDT_ENTRIES 7
+
+/* ***************************************************************************/
+/*				CONSTANCE                                     				 */
+/* ***************************************************************************/
 
 /* https://wiki.osdev.org/GDT_Tutorial */
 #define SEG_DESCTYPE(x) ((x) << 0x04)           /* Descriptor type (0 for system, 1 for code/data) */
@@ -42,10 +45,10 @@
 #define SEG_CODE_EXCA      0x0D     /* Execute-Only, conforming, accessed */
 #define SEG_CODE_EXRDC     0x0E     /* Execute/Read, conforming */
 #define SEG_CODE_EXRDCA    0x0F     /* Execute/Read, conforming, accessed */
- 
+#define FLAT_MEMORY 0
+#define FLAGS 0xCF
+#define FLAG_D_32 0xCF
 
-#define FLAT_GDT 0
- 
 /* 0x9A */
 #define GDT_CODE_PL0 SEG_DESCTYPE(1) | SEG_PRES(1) | SEG_SAVL(0) | \
                      SEG_LONG(0)     | SEG_SIZE(1) | SEG_GRAN(1) | \
@@ -81,16 +84,16 @@
 /*				struct                                     				 */
 /* ***************************************************************************/
 
-
 typedef struct  __attribute__((packed)) gdt_entry
 {
-   uint16 limit_low;           // The lower 16 bits of the limit.
-   uint16 base_low;            // The lower 16 bits of the base.
-   uint8  base_middle;         // The next 8 bits of the base.
-   uint8  access;              // Access flags, determine what ring this segment can be used in.
-   uint8  granularity;
-   uint8  base_high;           // The last 8 bits of the base.
-}  t_gdt_entry;
+	uint16 limit_low;		// The lower 16 bits of the limit.
+	uint16 base_low;		// The lower 16 bits of the base.
+	uint8  base_middle;		// The next 8 bits of the base.
+	uint8  access;		// Access flags, determine what ring this segment can be used in.
+	uint8  attributes;
+	uint8  base_high;		// The last 8 bits of the base.
+} 	t_gdt_entry;
+
 
 typedef struct  __attribute__((packed)) gdt_ptr
 {
@@ -110,7 +113,5 @@ extern void			print_stack(void);
 extern void			print_gdt(void);
 extern void			gdt_test(void);
 void				init_gdt();
-
-extern void			gdt_add_entry(uint8 index, uint32 base, uint32 limit, uint8 access, uint8 granularity);
 
 #endif /* !GDT_H_ */

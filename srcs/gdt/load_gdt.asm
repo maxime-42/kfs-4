@@ -1,26 +1,7 @@
-
-; global gdt_flush
-
-; gdt_flush:
-
-; 	mov eax, [esp + 4]
-; 	lgdt [eax]
-
-; 	mov ax, 0x10
-; 	mov ds, ax
-; 	mov es, ax
-; 	mov fs, ax
-; 	mov ss, ax
-
-; 	mov ax, 0x18
-; 	mov gs, ax
-
-; 	ret
-
 global gdt_flush
 
 gdt_flush:
-   mov eax, [esp+4]     ; 1st parameter : pointer to the IDT
+   mov eax, [esp+4]     ; 1st parameter
    lgdt [eax]
    mov ax, 0x10         ; 0x10 is the offset in the GDT to our data segment
    mov ds, ax           ; Load all data segment selectors

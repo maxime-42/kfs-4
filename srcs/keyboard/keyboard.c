@@ -3,6 +3,7 @@
 #include "libk.h"
 #include "io.h"
 #include "idt.h"
+#include "keyboard.h"
 
 static char azerty_kb_table[128] = {
 	0, 0, '&', 0, '"', '\'', '(', 0, 0, '!', 0, 0, ')', '-', '\b', 0, 'a', 'z',
@@ -13,23 +14,30 @@ static char azerty_kb_table[128] = {
 	0, 0, 0, 0, 0
 };
 
+
+
+/*****************************
+ * @brief:This function is called when a key has been pressed on the keyboard. 
+ * @param:frame  - A pointer to the frame of the interrupt stack
+ */
 static void keyboard_handler(t_interrupt_frame frame)
 {
-	// ft_putstr("Key board interrupt triggered\n");
-	uint16    scan_code = inb(KEYBOARD_DATA_PORT) & 0x7F;;
+	uint16    scan_code = inb(KEYBOARD_DATA_PORT) & 0x7F;/********** Get the data from the port **********/
+	char      character = azerty_kb_table[scan_code]; /******* Translate to ASCII if possible *******/
+
+	inb(KEYBOARD_DATA_PORT) ;
 	uint16    pressRelease = inb(KEYBOARD_DATA_PORT) & 0X80;
-    char *tab = azerty_kb_table;
-	//  outb(KEYBOARD_DATA_PORT, 0);
-	// char *str = itoa_base(scan_code, 10);
-	ft_putchar(tab[scan_code]);
-	ft_putchar('\n');
+    
+	if (pressRelease)//If it's a release we don't care about it for now
+        return;
+	else
+	{
+		outb(KEYBOARD_DATA_PORT, 0);
+		put_char_to_buffer(character);
 
-	(void)frame;
-	(void)pressRelease;
-	
+	}
+	(void)frame;	
 }
-// extern void enable_interrupts();
-
 
 
 void init_keyboard()

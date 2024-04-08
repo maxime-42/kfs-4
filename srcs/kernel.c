@@ -3,6 +3,7 @@
 #include "gdt.h"
 #include "keyboard.h"
 #include "interrupts.h"
+#include "commands.h"
 
 uint32 multi_two(uint32 n)
 {
@@ -48,7 +49,9 @@ void	kmain()
 	// ft_putstr("\nhello world\n");
 	// init_pit(100);
 	// init_rtc();
+	init_keyboard_buffer();
 	init_keyboard();
+	// qemu_shutdown();
 	// uint16 n = 12/0;
 	// problem();
 	while(42){

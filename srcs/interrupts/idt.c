@@ -7,21 +7,6 @@
 struct idt_entry idt_entries[TOTAL_INTERRUPTS];
 struct idtr_desc idtr_descriptor;
 
-	extern	void	panic();
-
-// static void idt_set(int index, void *address)
-// static void idt_set(int index, uint32 address)
-// {
-// 	idt_entries[index].offset_1 = (uint32) address & 0xFFFF;
-// 	idt_entries[index].offset_2 = (address >> 16) & 0xFFFF;
-	
-// 	idt_entries[index].selector = CODE_SELECTOR;
-// 	idt_entries[index].zero = 0;
-// 	idt_entries[index].flags = 0x8E;
-// 	// idt_entries[index].offset_2 = (uint32) address >> 16;
-
-// }
-
 
 static void idt_set(uint8 num, uint32 base)
 {
@@ -48,7 +33,8 @@ void	init_idt()
 
 	init_handlers();
 
-	pic_remap(0x20, 0x28);
+	// pic_remap(0x20, 0x28);
+	pic_map();
 	
 	idt_set(0, (uint32)isr0 );
     idt_set(1, (uint32)isr1 );

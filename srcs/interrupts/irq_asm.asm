@@ -1,4 +1,3 @@
-; ************************************************************************ ;
 
 ; from interrupts/irq.c
 extern irq_handler
@@ -9,7 +8,7 @@ irq%1:
     cli
     push byte 0
     push byte %2
-    jmp irq_wrapper
+    jmp irq_common_stub
 %endmacro
 
 IRQ 0, 32
@@ -29,7 +28,7 @@ IRQ 13, 45
 IRQ 14, 46
 IRQ 15, 47 
 
-irq_wrapper:
+irq_common_stub:
     pusha               ; Pushes edi,esi,ebp,esp,ebx,edx,ecx,eax
     mov ax, ds          ; Lower 16-bits of eax = ds.
     push eax            ; save the data segment descriptor

@@ -1,6 +1,7 @@
 #ifndef _INTERRUPTS_H
 #define _INTERRUPTS_H
-#include <stdint.h>
+#include "libk.h"
+#include "config.h"
 
 /* ************************************************************************** */
 /* 			Structs                                               */
@@ -11,46 +12,67 @@
 	values and other relevant information during interrupt or exception 
 	handling 
 */
-typedef struct __attribute__((packed)) registers
+typedef struct __attribute__((packed)) interrupt_frame
 {
-    uint32_t ds; 
-    uint32_t edi;
-    uint32_t esi;
-    uint32_t ebp;
-    uint32_t esp;
-    uint32_t ebx;
-    uint32_t edx;
-    uint32_t ecx;
-    uint32_t eax;
-    uint32_t int_no;
-    uint32_t err_code; 
-    uint32_t eip;
-    uint32_t cs;
-    uint32_t eflags;
-    uint32_t useresp;
-    uint32_t ss; 
-} t_registers; 
+    uint32 ds; 
+    uint32 edi;
+    uint32 esi;
+    uint32 ebp;
+    uint32 esp;
+    uint32 ebx;
+    uint32 edx;
+    uint32 ecx;
+    uint32 eax;
+    uint32 int_no;
+    uint32 err_code; 
+    uint32 eip;
+    uint32 cs;
+    uint32 eflags;
+    uint32 useresp;
+    uint32 ss; 
+} t_interrupt_frame; 
 
-
-
+// typedef struct  __attribute__((packed)) interrupt_frame{
+//     uint32 cr2;
+//     uint32 ds;
+//     uint32 edi, esi, ebp, esp, ebx, edx, ecx, eax;
+//     uint32 int_no, err_code;
+//     uint32 eip, csm, eflags, useresp, ss;
+// }t_interrupt_frame;
 
 /* ************************************************************************** */
 /* 			Prototy                                               */
 /* ************************************************************************** */
 
 
-typedef  void (*t_interrupt_handler)(t_registers);
-void			irq_handler(t_registers regs);
-void			pic_map(void);
-extern	void	panic();
-void			init_handlers(void);
-int				add_handler(uint32_t n, t_interrupt_handler handler);
-t_interrupt_handler get_interrupt_handler(uint32_t n);
+typedef  void (*t_interrupt_handler)(t_interrupt_frame);
+
+void						pic_map(void);
+extern	void				panic();
+void						init_handlers(void);
+int							add_handler(uint8 n, t_interrupt_handler handler);
+t_interrupt_handler 		get_interrupt_handler(uint32 n);
+extern void 				halt(void);
+extern void					enable_interrupts(void);
+extern	void				kpanic();
+
+void						pic_remap(uint8 offset1, uint8 offset2);
+
+void						init_pit(uint32 hz);
+void						isr_handler(t_interrupt_frame frame);
+void						irq_handler(t_interrupt_frame frame);
+// void						isr_handler(uint32 command, t_interrupt_frame frame);
+// void 						irq_handler(uint32 command, t_interrupt_frame frame);
+
+void						acknowledge(unsigned int interrupt);
 
 
 /* ************************************************************************** */
 /* 			Prototy isr                                               */
 /* ************************************************************************** */
+
+
+
 
 extern void isr0(void);
 extern void isr1(void);

@@ -18,10 +18,10 @@ OBJ_DIR     = obj
 # FLAGS       = -Wall -Wextra -Werror -fno-builtin -nostdlib -nodefaultlibs -I include/ 
 FLAGS		= -m32 -nostdlib -nodefaultlibs -fno-builtin -fno-exceptions -fno-stack-protector -Wall -Wextra -g3  -I include/ 
 GRUB_CFG    = grub.cfg
-BOOT        = boot.s
-SRC_ASM     = $(wildcard srcs/**/*.s) $(wildcard srcs/*.s)
+BOOT        = boot.asm
+SRC_ASM     = $(wildcard srcs/**/*.asm) $(wildcard srcs/*.asm)
 SRC_C       = $(wildcard srcs/**/*.c) $(wildcard srcs/*.c)
-OBJ_ASM     = $(patsubst srcs/%.s,$(OBJ_DIR)/%.o,$(SRC_ASM))
+OBJ_ASM     = $(patsubst srcs/%.asm,$(OBJ_DIR)/%.o,$(SRC_ASM))
 OBJ_C       = $(patsubst srcs/%.c,$(OBJ_DIR)/%.o,$(SRC_C))
 OBJ         = $(OBJ_ASM) $(OBJ_C)
 
@@ -44,7 +44,7 @@ $(OBJ_DIR)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
 	@gcc -m32 -ffreestanding ${FLAGS} -c $< -o $@
 
-$(OBJ_DIR)/%.o: srcs/%.s
+$(OBJ_DIR)/%.o: srcs/%.asm
 	@mkdir -p $(dir $@)
 	@nasm -f elf32 $< -o $@
 
@@ -56,7 +56,7 @@ verify-multiboot:
 	@if grub-file --is-x86-multiboot ${KERNEL_OUT}; then \
 		printf "$(BOLD)$(GREEN)[✓] Multiboot header is valid$(RESET)"; \
 	else \
-		printf "$(BOLD)$(RED)[✗] Multiboot header is not valid$(RESET)"; \
+		printf "$(BOLD)$(RED)[✗] Mufltiboot header is not valid$(RESET)"; \
 		exit 1; \
 	fi
 
@@ -80,4 +80,4 @@ qemu:
 	@qemu-system-i386 -cdrom ${ISO}
 
 qemu-no-iso:
-	@qemu-system-i386 -kernel ${KERNEL_OUT}
+	@qemu-system-i386 -kernel ${KERNEL_OUT}  -enable-kvm 

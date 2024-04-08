@@ -1,8 +1,10 @@
 #include "kernel.h"
 #include "idt.h"
+#include "gdt.h"
 #include "keyboard.h"
+#include "interrupts.h"
 
-uint32_t multi_two(uint32_t n)
+uint32 multi_two(uint32 n)
 {
 	return n * 2;
 }
@@ -17,19 +19,19 @@ void	set_string()
 
 }
 
-void	set_function()
-{
+// void	set_function()
+// {
 
-	uint32_t eip;
-	GET_EIP( eip); 
-	void (*ptrFunction)() = (void (*)())MULTI_ADDRESS ;
-	//void (*ptrFunction)() = (void (*)())eip;
-	copyFunction((void *)multi_two, (void *)ptrFunction, sizeof(multi_two));
+// 	uint32 eip;
+// 	GET_EIP( eip); 
+// 	void (*ptrFunction)() = (void (*)())MULTI_ADDRESS ;
+// 	//void (*ptrFunction)() = (void (*)())eip;
+// 	kmemcpy((void *)multi_two, (void *)ptrFunction, sizeof(multi_two));
 
-}
+// }
 
-extern void test_();
-extern int getkey();
+// extern void problem();
+// extern int getkey();
 
 void	kmain()
 {
@@ -43,11 +45,12 @@ void	kmain()
 	init_idt();	
 	// test_div();
 
-	// ft_putstr("\nhello world\n");s
-	//test_();
+	// ft_putstr("\nhello world\n");
 	// init_pit(100);
 	// init_rtc();
 	init_keyboard();
+	// uint16 n = 12/0;
+	// problem();
 	while(42){
 		// ft_putstr("hello");
 

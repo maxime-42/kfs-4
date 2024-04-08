@@ -1,23 +1,17 @@
 #ifndef IO_H
 #define IO_H
-#include <stdint.h>
+#include "config.h"
 
 
-// unsigned char insb(unsigned short port);
-// unsigned short insw(unsigned short port);
-
-// void outb(unsigned short port, unsigned char val);
-// void outw(unsigned short port, unsigned short val);
-
-
-
-uint8_t inb(uint16_t port);
+extern unsigned char inb(uint16 port);
+extern unsigned short insw(unsigned short port);
+extern void outb(unsigned short port, uint8 val);
+extern void outw(uint16 port, uint16  val);
 
 
 
-
-void outb(uint16_t port, uint8_t value);
-
-void outw(uint16_t port, uint16_t value);
+// uint8 inb(uint16 port);
+// void outb(uint16 port, uint8 value);
+// void outw(uint16 port, uint16 value);
 
 #endif

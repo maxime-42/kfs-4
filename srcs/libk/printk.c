@@ -6,7 +6,7 @@
 //     char    *format;
 //     int     i;
 //     char    tmp_addr[9];
-//     uint8_t   zero_padding;
+//     uint8   zero_padding;
 
 //     args = (int *)(&str);
 //     format = (char *)(*args++);

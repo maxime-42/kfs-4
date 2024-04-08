@@ -2,13 +2,13 @@
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25 
-uint16_t* video_mem = 0;
-uint16_t terminal_row = 0;
-uint16_t terminal_col = 0;
-// static uint32_t color = VGA_COLOR_WHITE;
+uint16* video_mem = 0;
+uint16 terminal_row = 0;
+uint16 terminal_col = 0;
+// static uint32 color = VGA_COLOR_WHITE;
 
 
-uint16_t terminal_make_char(char c, char colour)
+uint16 terminal_make_char(char c, char colour)
 {
     return (colour << 8) | c;
 }
@@ -43,7 +43,7 @@ void ft_putchar(char c )
 
 void terminal_initialize()
 {
-    video_mem = (uint16_t*)(0xB8000);
+    video_mem = (uint16*)(0xB8000);
     terminal_row = 0;
     terminal_col = 0;
     for (int y = 0; y < VGA_HEIGHT; y++)

@@ -1,60 +1,70 @@
-// #include "libk.h"
+#include "libk.h"
 
-// void printk(char *str, ...)
-// {
-//     int     *args;
-//     char    *format;
-//     int     i;
-//     char    tmp_addr[9];
-//     uint8   zero_padding;
 
-//     args = (int *)(&str);
-//     format = (char *)(*args++);
-//     i = 0;
-//     while (format[i]) {
-//         zero_padding = 0;
-//         if (format[i] == '%') {
-//             i++;
-//             /* padding with zeros - max 9 */
-//             if (format[i] == '0') {
-//                 i++;
-//                 zero_padding = format[i] - '0';
-//                 i++;
-//             }
-//             if (format[i] == 'c') {
-//                 ft_putchar(*args++);
-//             }
-//             else if (format[i] == 's') {
-//                 ft_putstr(*((char **)args++));
-//             }
-//             else if (format[i] == 'x') {
-//                 kmemset(tmp_addr, 0, sizeof(tmp_addr));
-//                 hex_to_str(*args++, tmp_addr);
-//                 ft_putstr(tmp_addr);
-//             }
-//             else if (format[i] == 'p') {
-//                 memset(tmp_addr, 0, sizeof(tmp_addr));
-//                 hex_to_str(*args++, tmp_addr);
-//                 ft_putstr("0x");
-//                 ft_putstr(tmp_addr);
-//             }
-//             else if (format[i] == 'd') {
-//                 if (zero_padding > 0) {
-//                     while (zero_padding - intlen(*args)) {
-//                         ft_putchar('0');
-//                         zero_padding--;
-//                     }
-//                 }
-//                 kputnbr(*args++);
-//             }
-//             else {
-//                 ft_putchar('%');
-//                 ft_putchar(format[i]);
-//             }
-//         }
-//         else {
-//             ft_putchar(format[i]);
-//         }
-//         i++;
-//     }
-// }
+void		printk(char *str, ...)
+{
+	int		*arg_ptr;
+	char	*format;
+	int		i = 0;
+	uint8	zero_padding;
+	char	temp_buffer[9];
+
+	arg_ptr = (int *)(&str);
+	format = (char *)(*arg_ptr++);
+
+	while (format[i]) 
+	{
+		zero_padding = 0;
+
+        if (format[i] == '%') {
+            i++;
+            
+            // Check for zero padding
+            if (format[i] == '0') {
+                i++;
+                zero_padding = format[i] - '0';
+                i++;
+            }
+
+            // Process format specifiers
+            switch (format[i]) {
+                case 'c':
+                    ft_putchar(*arg_ptr++);
+                    break;
+                case 's':
+                    ft_putstr(*((char **)arg_ptr++));
+                    break;
+                case 'x':
+                    kmemset(temp_buffer, 0, sizeof(temp_buffer));
+                    hex_to_str(*arg_ptr++, temp_buffer);
+                    ft_putstr(temp_buffer);
+                    break;
+                case 'p':
+                    kmemset(temp_buffer, 0, sizeof(temp_buffer));
+                    hex_to_str(*arg_ptr++, temp_buffer);
+                    ft_putstr("0x");
+                    ft_putstr(temp_buffer);
+                    break;
+                case 'd':
+                    // Handle zero padding
+                    if (zero_padding > 0) {
+                        while (zero_padding - number_digit(*arg_ptr)) {
+                            ft_putchar('0');
+                            zero_padding--;
+                        }
+                    }
+                    kputnbr(*arg_ptr++);
+                    break;
+                default:
+                    // Print the character directly if not a format specifier
+                    ft_putchar('%');
+                    ft_putchar(format[i]);
+                    break;
+            }
+        } else {
+            // Print non-format characters directly
+            ft_putchar(format[i]);
+        }
+        i++;
+    }
+}

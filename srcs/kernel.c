@@ -4,12 +4,9 @@
 #include "keyboard.h"
 #include "interrupts.h"
 #include "commands.h"
+#include "shell.h"
 
-uint32 multi_two(uint32 n)
-{
-	return n * 2;
-}
-
+extern void test_syscalls();
 void	set_string()
 {
 
@@ -19,21 +16,6 @@ void	set_string()
 
 
 }
-
-// void	set_function()
-// {
-
-// 	uint32 eip;
-// 	GET_EIP( eip); 
-// 	void (*ptrFunction)() = (void (*)())MULTI_ADDRESS ;
-// 	//void (*ptrFunction)() = (void (*)())eip;
-// 	kmemcpy((void *)multi_two, (void *)ptrFunction, sizeof(multi_two));
-
-// }
-
-// extern void problem();
-// extern int getkey();
-
 void	kmain()
 {
 
@@ -42,22 +24,26 @@ void	kmain()
 	init_gdt();
 
 
-	// test_div();
 	init_idt();	
 	// test_div();
+	// printk("hello world\n");
+	set_string();
 
-	// ft_putstr("\nhello world\n");
-	// init_pit(100);
-	// init_rtc();
+	
 	init_keyboard_buffer();
 	init_keyboard();
 	// qemu_shutdown();
 	// uint16 n = 12/0;
-	// problem();
-	while(42){
+
+	init_syscalls();
+	// test_syscall();
+
+	shell();
+	// int n = 12;
+	// printk("hello %05d\n", 12);
+	// while(42){
 		// ft_putstr("hello");
-
-
-	}
+			// shell();
+	// }
 
 }

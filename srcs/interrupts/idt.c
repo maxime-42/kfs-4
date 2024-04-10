@@ -7,7 +7,18 @@
 struct idt_entry idt_entries[TOTAL_INTERRUPTS];
 struct idtr_desc idtr_descriptor;
 
+/*********************************************************
+ * @brief: this function sets the idt table
+ * 
+ * @param: num - the interrupt number
+ * 		   base - the base address of the interrupt handler
+ * 
+ * @return: none
+ * 
+*  @details: 
+ * 
 
+**********************************************************/
 static void idt_set(uint8 num, uint32 base)
 {
     idt_entries[num].base_lo = base & 0xFFFF;
@@ -22,19 +33,25 @@ static void idt_set(uint8 num, uint32 base)
 }
 
 
-
-
+/******************************************************
+ * @brief: ths function initializes the idt table
+ * 
+ * @param: none
+ * 
+ * @return: none
+*  @details:initialize the handlers and map thepic;
+ * 
+*******************************************************/
 void	init_idt()
 {
-	kmemset(idt_entries, 0, sizeof(struct idt_entry ) * TOTAL_INTERRUPTS );
-	// kmemset(idt_entries, 0, sizeof(struct idt_desc) * TOTAL_INTERRUPTS - 1);
-	idtr_descriptor.limit = sizeof(struct idt_entry) * 256 - 1;
+	kmemset(idt_entries, 0, sizeof(idt_entries ) );
+	idtr_descriptor.limit = sizeof(struct idt_entry) * TOTAL_INTERRUPTS - 1;
 	idtr_descriptor.base = (uint32) idt_entries;
 
-	init_handlers();
+	init_handlers();// initialize the handlers
 
-	// pic_remap(0x20, 0x28);
-	pic_map();
+	pic_map();// map the pic
+
 	
 	idt_set(0, (uint32)isr0 );
     idt_set(1, (uint32)isr1 );
@@ -86,9 +103,6 @@ void	init_idt()
     idt_set(45, (uint32)irq13);
     idt_set(46, (uint32)irq14);
     idt_set(47, (uint32)irq15);
-
-	// idt_set(1, idt_48);/
-
 		
 	load_idt((uint32)&idtr_descriptor);
 	// load_idt((uint32)&idtr_descriptor);

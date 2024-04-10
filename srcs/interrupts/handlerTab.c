@@ -23,14 +23,13 @@ void init_handlers(void)
 // Function to add a handler to the interrupt vector table
 // n: The index of the interrupt vector table where the handler will be added
 //  handler: The interrupt handler function to be added
-int add_handler(uint8 n, t_interrupt_handler handler)
+int add_handler(uint32 n, t_interrupt_handler handler)
 {
-    // // Check if the index is within the bounds of the interrupt vector table
-    // if (n >= 256) {
-    //     // If the index is out of bounds, do nothing and return
-    //     return -1;
-    // }
-
+    // Check if the index is within the bounds of the interrupt vector table
+    if (n >= 256) {
+        // If the index is out of bounds, do nothing and return
+        return 1;
+    }
     // Add the handler to the specified index of the interrupt vector table
     handlers[n] = handler;
 	return  0;

@@ -6,7 +6,7 @@
 /*   By: mkayumba <mkayumba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 18:48:02 by vvaucoul          #+#    #+#             */
-/*   Updated: 2024/04/08 13:47:33 by mkayumba         ###   ########.fr       */
+/*   Updated: 2024/04/10 12:08:47 by mkayumba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ typedef struct  __attribute__((packed)) gdt_ptr
 extern void			gdt_flush(uint32 gdt_ptr);
 extern void			load_gdt(uint32 gdt_ptr);
 extern void			gdt_install(void);
-extern void			print_stack(void);
-extern void			print_gdt(void);
-extern void			gdt_test(void);
+// extern void			print_stack(void);
+// extern void			print_gdt(void);
+// extern void			gdt_test(void);
 void				init_gdt();
 
 #endif /* !GDT_H_ */

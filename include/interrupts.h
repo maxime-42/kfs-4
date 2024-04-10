@@ -50,7 +50,7 @@ typedef  void (*t_interrupt_handler)(t_interrupt_frame);
 void						pic_map(void);
 extern	void				panic();
 void						init_handlers(void);
-int							add_handler(uint8 n, t_interrupt_handler handler);
+int							add_handler(uint32 n, t_interrupt_handler handler);
 t_interrupt_handler 		get_interrupt_handler(uint32 n);
 extern void 				halt(void);
 extern void					enable_interrupts(void);
@@ -61,10 +61,8 @@ void						pic_remap(uint8 offset1, uint8 offset2);
 void						init_pit(uint32 hz);
 void						isr_handler(t_interrupt_frame frame);
 void						irq_handler(t_interrupt_frame frame);
-// void						isr_handler(uint32 command, t_interrupt_frame frame);
-// void 						irq_handler(uint32 command, t_interrupt_frame frame);
-
 void						acknowledge(unsigned int interrupt);
+void						init_syscalls(void);
 
 
 /* ************************************************************************** */

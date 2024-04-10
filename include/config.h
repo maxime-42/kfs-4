@@ -18,7 +18,8 @@
 #define		OFFSET2 0x28
 #define		IRQ0	32
 #define		IRQ1	33
-
+#define 	DECIMAL 10
+#define 	HEX_BASE 16
 
 typedef unsigned char       uint8;
 typedef unsigned short      uint16;
@@ -47,7 +48,7 @@ typedef unsigned int        uint32;
 #define PIC_ICW1_INIT 0x10
 #define PIC_ICW4_8086 0x01
 #define PIC_ACKNOWLEDGE 0x20
-
+// #define """ 
 
 #define CLEAN_REGISTERS() asm volatile ("xor %eax, %eax"); \
                         asm volatile ("xor %ebx, %ebx"); \

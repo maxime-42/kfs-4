@@ -58,8 +58,7 @@ void	ft_putstr_color(const char* str, uint32 color);
 void	print_register();
 void	set_function();
 void	set_string();
-void	read_to_stack(void *mem_addr, uint32 sizee);
-
+extern 	void test_syscalls();
 // void print_char_with_asm(char *ptr);
 
 #endif // SOME_HEADER_H

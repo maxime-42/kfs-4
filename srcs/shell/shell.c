@@ -4,6 +4,7 @@
 #include "shell.h"
 #include "commands.h"
 #include "interrupts.h"
+#include "io.h"
 
 /*
 *	check_new_line
@@ -27,52 +28,55 @@ static uint32		check_new_line()
 	return NO_NEW_LINE;
 }
 
-/*****************************
- * @brief: exec command from keyboard buffer
- * @return: void
- *
- * ****************************/
-void		exec_command(void)
-{
-
-	char *ptr_buf =  get_keyboard_buffer();
-
-	if (strcmp(ptr_buf, "azerty\n")  == 0)
-	{
-		set_keyboard_layout(AZERTY);
-	}
-	else if (strcmp(ptr_buf, "qwerty\n")  == 0)
-	{
-		set_keyboard_layout(QWERTY);
-	}
-	else if (strcmp(ptr_buf, "shutdown\n")  == 0)
-	{
-		qemu_shutdown();
-	}
-	else if (strcmp(ptr_buf, "stack\n")  == 0)
-	{
-		    // uint32	esp, ebp;
-			// GET_ESP(esp);
-			// GET_EBP(ebp);
-			uint32 addr = 0X000007C0 - 32;
-			print_stack(&addr, 10);
-			// print_stack(ebp,  10);
-	}
-	else if (strcmp(ptr_buf, "panic\n")  == 0)
-	{
-		uint32 addr = 0X000007C0 - 32;
-		print_stack(&addr, 10);
-		kpanic();
-
-	}
 
 
-	clear_buffer();
+
+/***********************************************************************
+
+ * @brief: this function is used to execute the command entered by the user
+ * 
+ * @param: void
+ * 
+ * @return: int
+ * @note:
+ * @details: allow
+************************************************************************/
+uint32 exec_command(void) {
+    char *ptr_buf = get_keyboard_buffer();
+    int ret = check_new_line();
+	uint32 addr = 0X000007C0 - 32;
+
+    if (ret == NEW_LINE) 
+	{
+        if (strcmp(ptr_buf, "azerty\n") == 0) {
+            set_keyboard_layout(AZERTY);
+        } else if (strcmp(ptr_buf, "qwerty\n") == 0) {
+            set_keyboard_layout(QWERTY);
+        } else if (strcmp(ptr_buf, "shutdown\n") == 0) {
+            qemu_shutdown();
+        } else if (strcmp(ptr_buf, "stack\n") == 0) {
+            print_stack(&addr, 10);
+        } else if (strcmp(ptr_buf, "panic\n") == 0) {
+            print_stack(&addr, 10);
+            kpanic();
+        } else if (strcmp(ptr_buf, "clear\n") == 0) {
+            terminal_initialize();
+        } else if (strcmp(ptr_buf, "reboot\n") == 0) {
+            reboot();
+        } else {
+			printk("Invalid command: %s\n", ptr_buf);
+        }
+
+        clear_buffer();
+        // ft_putstr("$> ");
+    }
+
+    return ret;
 }
 
 void		shell(void)
 {
-	uint8	ret = 0;
+	uint8	ret = NEW_LINE;
 	while (1)
 	{
 		if (ret == NEW_LINE)

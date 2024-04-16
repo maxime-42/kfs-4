@@ -37,7 +37,7 @@ void	kmain()
 	// uint16 n = 12/0;
 
 	init_syscalls();
-	test_syscalls();
+	// test_syscalls();
 
 	shell();
 	// int addr = 0X000007C0 - 32;

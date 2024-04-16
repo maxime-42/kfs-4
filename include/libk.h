@@ -19,6 +19,6 @@ int			strcmp(const char *s1, const char *s2);
 void		printk(char *str, ...);
 void		kputnbr(int nb);
 int			number_digit(int n);
-void		print_stack(void *mem_addr, uint32 sizee);
+void		kdump(void *mem_addr, uint32 sizee);
 
 #endif // !_LIBK_H

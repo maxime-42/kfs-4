@@ -9,7 +9,7 @@ void syscall_handler( t_interrupt_frame frame)
 {
 	printk("syscall number %d called\n", frame.eax);
 
-	// acknowledge(frame.i
+	// acknowledge(frame.i)
 
 }
 

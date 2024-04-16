@@ -1,9 +1,8 @@
-global panic
 global kpanic
 
-panic :
-	cli
-	hlt
+disable :
+	cli; Disable interrupts
+	hlt; Halt the CPU
 
 
 section .text
@@ -20,5 +19,5 @@ clean_registers:
 kpanic:
     call clean_registers  ; Call the clean_registers function to clean the registers
 .loop:
-	call panic             ;
+	call disable             ;
     jmp .loop             ; Loop indefinitely

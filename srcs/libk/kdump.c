@@ -11,7 +11,7 @@
  * @return: None
  *******************************/
 
-void ft_print_hex(uint8 c, uint32 index) 
+static void ft_print_hex(uint8 c, uint32 index) 
 {
     const char base[HEX_BASE] = "0123456789abcdef";
 
@@ -38,7 +38,7 @@ void ft_print_hex(uint8 c, uint32 index)
  * 
  * @return: None
  ***************************************************/
-void print_stack(void *mem_addr, uint32 size) 
+void kdump(void *mem_addr, uint32 size) 
 {
     
 	uint32 *ptrAddr = (uint32 *)mem_addr;

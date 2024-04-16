@@ -7,12 +7,12 @@
 #include "io.h"
 
 /*
-*	check_new_line
+*	read_line
 *		check if the last char is a new line
 *		return 1 if it is a new line
 *		return 0 if it is not a new line
 */
-static uint32		check_new_line()
+static uint32		read_line()
 {
 
 		// ft_putstr("keyb_buf.buffer");
@@ -41,9 +41,9 @@ static uint32		check_new_line()
  * @note:
  * @details: allow
 ************************************************************************/
-uint32 exec_command(void) {
+static uint32 exec_command(void) {
     char *ptr_buf = get_keyboard_buffer();
-    int ret = check_new_line();
+    int ret = read_line();
 	uint32 addr = 0X000007C0 - 32;
 
     if (ret == NEW_LINE) 
@@ -55,9 +55,9 @@ uint32 exec_command(void) {
         } else if (strcmp(ptr_buf, "shutdown\n") == 0) {
             qemu_shutdown();
         } else if (strcmp(ptr_buf, "stack\n") == 0) {
-            print_stack(&addr, 10);
+            kdump(&addr, 10);
         } else if (strcmp(ptr_buf, "panic\n") == 0) {
-            print_stack(&addr, 10);
+            kdump(&addr, 10);
             kpanic();
         } else if (strcmp(ptr_buf, "clear\n") == 0) {
             terminal_initialize();
@@ -74,9 +74,26 @@ uint32 exec_command(void) {
     return ret;
 }
 
+static void display_menu() 
+{
+
+	printk("======================\n");
+	printk("| Available Commands |\n");
+	printk("======================\n");
+	printk("| azerty    : Set keyboard layout to AZERTY.   |\n");
+	printk("| qwerty    : Set keyboard layout to QWERTY.   |\n");
+	printk("| shutdown  : Shutdown the system.             |\n");
+	printk("| stack     : Display stack information.       |\n");
+	printk("| panic     : Display stack information and    |\n");
+	printk("|             enter kernel panic.              |\n");
+	printk("| clear     : Clear the terminal screen.       |\n");
+	printk("| reboot    : Reboot the system.               |\n");
+	printk("======================\n");
+}
 void		shell(void)
 {
 	uint8	ret = NEW_LINE;
+	display_menu();
 	while (1)
 	{
 		if (ret == NEW_LINE)
@@ -85,7 +102,7 @@ void		shell(void)
 			ft_putstr("$> ");
 		}
 
-		ret = check_new_line();
+		ret = read_line();
 	}
 	
 }

@@ -7,6 +7,7 @@
 #include "shell.h"
 
 extern void test_syscalls();
+
 void	set_string()
 {
 
@@ -36,17 +37,11 @@ void	kmain()
 	// uint16 n = 12/0;
 
 	init_syscalls();
-	// test_syscall();
+	test_syscalls();
 
 	shell();
 	// int addr = 0X000007C0 - 32;
 	// GET_ESP(addr);
-	// print_stack(&addr, 20);
-	// int n = 12;
-	// printk("hello %05d\n", 12);
-	// while(42){
-		// ft_putstr("hello");
-			// shell();
-	// }
+	// kdump(&addr, 20);
 
 }

@@ -47,7 +47,6 @@ void isr_handler(t_interrupt_frame frame)
 		char *msg_ptr = exception_messages[frame.int_no];
 		ft_putstr(msg_ptr);
 		kpanic();
-		// KPANIC("");
 	}
 	return ;
 }

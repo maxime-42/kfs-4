@@ -8,12 +8,13 @@ extern kmain
 global load_gdt
 global _start
 
-global syscalls
-test_syscalls:
+; global global syscalls
+; test_syscalls:
 
-    mov eax, 2 ; Command print
-    int 0x80
-    ret
+;     mov eax, 2 ; Command print
+;     int 0x80
+;     ret
+	
 
 load_gdt:
 	mov eax, [esp + 4]

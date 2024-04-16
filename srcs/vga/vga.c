@@ -1,4 +1,6 @@
 #include "kernel.h"
+#include "io.h"
+#include "config.h"
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25 
@@ -18,14 +20,40 @@ void terminal_putchar(int x, int y, char c, char colour)
     video_mem[(y * VGA_WIDTH) + x] = terminal_make_char(c, colour);
 }
 
+void terminal_backspace()
+{
+    if (terminal_row == 0 && terminal_col == 0)
+    {
+        return;
+    }
+
+    if (terminal_col == 0)
+    {
+        terminal_row -= 1;
+        terminal_col = VGA_WIDTH;
+    }
+
+    terminal_col -=1;
+    terminal_writechar(' ', 15);
+    terminal_col -=1;
+}
+
 void terminal_writechar(char c, char colour)
 {
+    outb(COM1, c);
+
     if (c == '\n')
     {
         terminal_row += 1;
         terminal_col = 0;
         return;
     }
+
+//  if (c == 0x08)
+//     {
+//         terminal_backspace();
+//         return;
+//     }
 
     terminal_putchar(terminal_col, terminal_row, c, colour);
     terminal_col += 1;

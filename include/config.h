@@ -48,6 +48,8 @@ typedef unsigned int        uint32;
 #define PIC_ICW1_INIT 0x10
 #define PIC_ICW4_8086 0x01
 #define PIC_ACKNOWLEDGE 0x20
+#define COM1 0x3f8          // COM1
+
 // #define """ 
 
 #define CLEAN_REGISTERS() asm volatile ("xor %eax, %eax"); \

@@ -2,7 +2,7 @@
 
 void hex_to_str(uint32 addr, char *result) {
     // Define the hexadecimal characters
-    const char hex_chars[] = "0123456789ABCDEF";
+    const char hex_chars[] = "0123456789abcdef";
 
     // Iterate through each nibble (4 bits) of the address
     for (int i = 7; i >= 0; --i) {
@@ -16,3 +16,4 @@ void hex_to_str(uint32 addr, char *result) {
     // Null-terminate the string
     result[8] = '\0';
 }
+//0007fee000

@@ -11,7 +11,7 @@ void	set_string()
 {
 
 	void *ptr = (void *)STRING_ADDRESS;
-	char str[] = "hello world lenoxko";    	
+	char str[] = "hello world lenox-kay";    	
 	kmemcpy(ptr, str, sizeof(str));
 
 
@@ -39,6 +39,9 @@ void	kmain()
 	// test_syscall();
 
 	shell();
+	// int addr = 0X000007C0 - 32;
+	// GET_ESP(addr);
+	// print_stack(&addr, 20);
 	// int n = 12;
 	// printk("hello %05d\n", 12);
 	// while(42){

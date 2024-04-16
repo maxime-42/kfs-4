@@ -10,12 +10,14 @@ RESET       =   \033[0m
 
 LINKER      = linker.ld  # Define linker script file
 
+LOG_FILE = output.log
+
+
 TARGET      = myos
 ISO         = $(TARGET).iso
 KERNEL_OUT  = myos.bin
 OBJ_DIR     = obj
 
-# FLAGS       = -Wall -Wextra -Werror -fno-builtin -nostdlib -nodefaultlibs -I include/ 
 FLAGS		= -m32 -nostdlib -nodefaultlibs -fno-builtin -fno-exceptions -fno-stack-protector -Wall -Wextra -g3  -I include/ 
 GRUB_CFG    = grub.cfg
 BOOT        = boot.asm
@@ -68,7 +70,7 @@ build-iso:
 	@printf "$(BOLD)$(GREEN)[✓] ISO BUILD DONE$(RESET)"
 
 clean:
-	@rm -rf $(OBJ_DIR) $(ISO)
+	@rm -rf $(OBJ_DIR) $(ISO) $(LOG_FILE)
 	@printf "$(BOLD)$(RED)[♻︎] DELETE KERNEL DONE$(RESET)"	
 
 fclean: clean
@@ -77,7 +79,9 @@ fclean: clean
 	@printf "$(BOLD)$(RED)[♻︎] DELETE BUILD/ DONE$(RESET)"
 
 qemu:
-	@qemu-system-i386 -cdrom ${ISO}
+	@qemu-system-i386 -cdrom ${ISO}  -serial file:$(LOG_FILE)
 
 qemu-no-iso:
-	@qemu-system-i386 -kernel ${KERNEL_OUT}  -enable-kvm 
+	@qemu-system-i386 -kernel ${KERNEL_OUT}  -enable-kvm   -serial file:$(LOG_FILE)
+
+# .PHONY: all build fclean clean qemu qemu-no-iso

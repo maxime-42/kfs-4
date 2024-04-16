@@ -11,9 +11,9 @@
  * @return: None
  *******************************/
 
-void ft_print_hex(char c, int index) 
+void ft_print_hex(uint8 c, uint32 index) 
 {
-    const char base[16] = "0123456789abcdef";
+    const char base[HEX_BASE] = "0123456789abcdef";
 
     if (index < HEX_BASE) {
         // ft_putchar(base[c / HEX_BASE]);
@@ -22,8 +22,11 @@ void ft_print_hex(char c, int index)
 		printk("%c%c ", base[c / HEX_BASE], base[c % HEX_BASE]);
     }
 
-    if ((index + 1) % 8 == 0)
+    // if ((index + 1) % 8 == 0)
+        // ft_putchar(' ');
+	if (index == 16)
         ft_putchar(' ');
+
 }
 
 /**************************************************
@@ -41,13 +44,11 @@ void print_stack(void *mem_addr, uint32 size)
 	uint32 *ptrAddr = (uint32 *)mem_addr;
     uint32 addr = *ptrAddr;
     char *str = (char *)addr;
-    char addr_str[9];
+    // char addr_str[9];
 
+	// kmemset(addr_str, 0, sizeof(addr_str));
     for (uint32 j = 0; j < size; j++) {
-        hex_to_str(addr, addr_str);
-        // ft_putstr(addr_str);
-        // ft_putstr(" ");
-		printk("x%s", addr_str);
+		printk("%x| ", addr);
 
         for (uint32 i = 0; i < 32; i++)
             ft_print_hex(str[i], i);
